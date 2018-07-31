@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "261290197628",
+    "firebase_url": "https://myplayerandroid-89b87.firebaseio.com",
+    "project_id": "myplayerandroid-89b87",
+    "storage_bucket": "myplayerandroid-89b87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261290197628:android:eaca0b6f459b354b",
+        "android_client_info": {
+          "package_name": "myvideoplayer.dvchat.com.myvideoplayer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "261290197628-vfrh43miamdpk8p7ri7cldd5j8oqf9gs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "myvideoplayer.dvchat.com.myvideoplayer",
+            "certificate_hash": "c214b846f88cd601916962f248a2069de73aa0e0"
+          }
+        },
+        {
+          "client_id": "261290197628-ovclti5b85k1bull4ldq2gg4d89eg1v3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH5YKm-In5SB3oBaku3Xk7gRg38QCcxKg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "261290197628-ovclti5b85k1bull4ldq2gg4d89eg1v3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

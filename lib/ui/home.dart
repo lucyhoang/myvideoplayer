@@ -133,7 +133,7 @@ class AllVideosPage extends StatelessWidget {
           if (snapshot.hasError) print(snapshot.error);
           return snapshot.hasData
               ? new ListVideo(list: snapshot.data, inPlayList: false)
-              : new CircularProgressIndicator();
+              : Center(child: new CircularProgressIndicator());
         });
   }
 }

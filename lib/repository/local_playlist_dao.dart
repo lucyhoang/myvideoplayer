@@ -4,6 +4,7 @@ import 'package:my_video_player/model/playlist.dart';
 import 'package:my_video_player/model/video.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
+import 'package:path_provider/path_provider.dart';
 
 class PlayListDAO {
   Database _db;
@@ -20,9 +21,8 @@ class PlayListDAO {
   Future<Database> get _database async {
     if (_db == null) {
       if (_dbPath == null) {
-        //var dataDir = await getApplicationDocumentsDirectory();
-        //var dataDir = dirname(Platform.script.toString());
-        _dbPath = "/Users/lucy/Projects/my_video_player/lib/myplaylist.db";
+        var dataDir = await getApplicationDocumentsDirectory();
+        _dbPath = dataDir.path + "/myplaylist.db";
       }
       _db = await databaseFactoryIo.openDatabase(_dbPath);
     }

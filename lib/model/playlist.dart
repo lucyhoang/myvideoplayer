@@ -2,11 +2,13 @@ import 'package:my_video_player/model/video.dart';
 import 'package:my_video_player/model/globals.dart';
 
 class PlayList{
+
   PlayList({
     this.id,
     this.name,
     this.videos
     });
+
   final String id;
   final String name;
   List<Video> videos;
@@ -22,7 +24,13 @@ class PlayList{
 class PlayListEvent {
   EventType eventType;
   PlayList data;
-  PlayListEvent(this.eventType, this.data);
+  PlayListEvent({this.eventType, this.data});
+}
+
+class DataChangedEvent {
+  EventType eventType;
+  DataChangedEvent({this.eventType, this.data});
+  Object data;
 }
 
 class PlayListVideo {

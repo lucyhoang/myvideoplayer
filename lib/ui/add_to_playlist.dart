@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_video_player/model/playlist.dart';
 import 'package:my_video_player/repository/local_playlist_dao.dart';
+import 'package:my_video_player/model/globals.dart' as globals;
 
 class PlayListSelect extends StatefulWidget {
   PlayListSelect({Key key, this.playlistVideo}) : super(key: key);
@@ -15,6 +16,19 @@ class PlayListSelect extends StatefulWidget {
 
 class _PlayListSelectState extends State<PlayListSelect> {
   PlayListDAO playListDAO = new PlayListDAO();
+  String message = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    globals.eventBus.on<DataChangedEvent>().listen((event) {
+      setState(() {
+        message = "Data is changed";
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -33,6 +47,7 @@ class _PlayListSelectState extends State<PlayListSelect> {
                   return new _PlayListSelectItem(product);
                 }).toList(),
               )),
+              Center(child: Text(message)),
               Row(
                 children: <Widget>[
                   new Expanded(
@@ -41,10 +56,11 @@ class _PlayListSelectState extends State<PlayListSelect> {
                         Map<String, bool> changedPL = new Map<String, bool>();
                         for (PlayListVideo p in widget.playlistVideo) {
                           if (p.isChanged) changedPL[p.playList.id] = p.isRelated;
-                          print(changedPL.length);
-                          print("-------------");
                         }
                         playListDAO.updatePlayList(changedPL, widget.playlistVideo.first.video);
+                        message = "Save successful";
+                        setState(() {
+                        });
                       },
                       child: new Text('Save'),
                     ),
@@ -80,7 +96,6 @@ class _PlayListSelectItem extends StatefulWidget {
 
 class _PlayListSelectItemState extends State<_PlayListSelectItem> {
   final PlayListVideo playlistVideo;
-
   _PlayListSelectItemState(this.playlistVideo);
 
   @override
@@ -98,6 +113,7 @@ class _PlayListSelectItemState extends State<_PlayListSelectItem> {
                     playlistVideo.isRelated = value;
                     playlistVideo.isChanged = true;
                   });
+                  globals.eventBus.fire(new DataChangedEvent(eventType: globals.EventType.Updated));
                 })
           ],
         ));

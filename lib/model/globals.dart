@@ -3,11 +3,11 @@ import 'package:event_bus/event_bus.dart';
 
 GoogleSignIn googleSignIn = new GoogleSignIn(
   scopes: <String>[
-    'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
     'https://www.googleapis.com/auth/drive',
   ],
 );
+
+String token;
 
 GoogleSignInAccount _currentUser;
 

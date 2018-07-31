@@ -1,11 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_video_player/model/globals.dart' as globals;
-import 'package:my_video_player/model/playlist.dart';
-import 'package:my_video_player/model/video.dart';
-import 'package:my_video_player/repository/local_playlist_dao.dart';
 import 'home.dart';
 
 class LoginPage extends StatefulWidget {
@@ -26,8 +22,6 @@ class LoginState extends State<LoginPage> {
         .listen((GoogleSignInAccount account) {
       setState(() {
         globals.currentUser = account;
-        print(
-            "Change Current User. Now user is ${globals.currentUser != null}");
       });
     });
 

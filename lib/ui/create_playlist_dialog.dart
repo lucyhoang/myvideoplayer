@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_video_player/model/globals.dart' as globals;
 import 'package:my_video_player/model/playlist.dart';
+import 'package:my_video_player/repository/local_playlist_dao.dart';
 
-import '../repository/local_playlist_dao.dart';
 
 class CreateNewPlaylist extends StatelessWidget {
   PlayListDAO playlistDAO = new PlayListDAO();
@@ -65,9 +65,9 @@ class CreateNewPlaylist extends StatelessWidget {
                       PlayList pl = new PlayList(
                           name: nameController.text,
                           id: DateTime.now().millisecondsSinceEpoch.toString());
+                      PlayListEvent ple = new PlayListEvent(eventType: globals.EventType.Add, data: pl);
                       playlistDAO.addPlayList(pl);
-                      globals.eventBus.fire(pl);
-                      print("fire event");
+                      globals.eventBus.fire(ple);
                       Navigator.pop(context);
                     },
                   ),

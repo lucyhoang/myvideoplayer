@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_video_player/model/globals.dart' as globals;
 import 'package:my_video_player/repository/local_playlist_dao.dart';
-import 'package:my_video_player/model/playlist.dart';
 import 'package:my_video_player/model/video.dart';
 import 'add_to_playlist.dart';
 import 'play_video.dart';
@@ -33,17 +32,19 @@ class ListVideoState extends State<ListVideo> {
     super.initState();
     globals.eventBus.on<VideoEvent>().listen((event) {
       setState(() {
-        switch (event.eventType) {
-          case globals.EventType.Remove:
-            list.removeWhere((v) => v.id == event.video.id);
-            break;
-          case globals.EventType.Add:
-            if (event.playlistId == widget.playlistId) {
-              list.add(event.video);
-            }
-            break;
-          default:
-            break;
+        if (widget.inPlayList) {
+          switch (event.eventType) {
+            case globals.EventType.Remove:
+              list.removeWhere((v) => v.id == event.video.id);
+              break;
+            case globals.EventType.Add:
+              if (event.playlistId == widget.playlistId) {
+                list.add(event.video);
+              }
+              break;
+            default:
+              break;
+          }
         }
       });
     });
@@ -58,13 +59,13 @@ class ListVideoState extends State<ListVideo> {
             margin: EdgeInsets.only(top: 15.0),
             child: ListTile(
               contentPadding:
-                  EdgeInsets.only(top: 15.0, bottom: 15.0, left: 15.0),
+                  EdgeInsets.only(top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
               leading: Container(
-                  width: 130.0,
-                  height: 90.0,
+                  width: 120.0,
+                  height: 50.0,
                   decoration: BoxDecoration(
-                      color: Colors.black38,
-                      border: Border.all(width: 1.0, color: Colors.grey[300]),
+                      color: Colors.transparent,
+                      //border: Border.all(width: 1.0, color: Colors.grey[300]),
                       borderRadius: BorderRadius.circular(1.0)),
                   child: MaterialButton(
                     child: list[i].thumbnailLink != null
@@ -80,9 +81,9 @@ class ListVideoState extends State<ListVideo> {
                     onPressed: () => Navigator.of(context).push(
                         new MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                new VideoPlay(url: list[i].embedLink))),
+                                new VideoPlay(url: list[i].embedLink, title: list[i].title))),
                   )),
-              title: Text(list[i].title),
+              title: Text(list[i].title.split(".")[0]),
               trailing: PopupMenuButton<int>(
                 icon:
                     Icon(Icons.more_vert, size: 30.0, color: Colors.grey[700]),

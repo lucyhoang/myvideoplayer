@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_video_player/model/globals.dart' as globals;
 import 'package:my_video_player/repository/local_playlist_dao.dart';
-
-import '../model/playlist.dart';
-import 'playlist_detail.dart';
+import 'package:my_video_player/model/playlist.dart';
+import 'package:my_video_player/ui/playlist_detail.dart';
 
 class PlaylistPage extends StatefulWidget {
   PlaylistPage({Key key, this.title}) : super(key: key);
@@ -47,9 +46,11 @@ class _AllPlayListState extends State<_AllPlayList> {
   @override
   void initState() {
     super.initState();
-    globals.eventBus.on<PlayList>().listen((event) {
+    globals.eventBus.on<PlayListEvent>().listen((event) {
       setState(() {
-        playlist.add(event);
+        if (event.eventType == globals.EventType.Add){
+          playlist.add(event.data);
+        }
       });
     });
   }

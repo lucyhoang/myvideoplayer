@@ -9,24 +9,14 @@ class VideoPlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: AppBar(
-          elevation: 2.0,
-          title: Text('Play video'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add, size: 30.0, color: Colors.white),
-              onPressed: () {},
+    return WebviewScaffold(
+            url: url,
+            appBar: new AppBar(
+              title: new Text(title),
             )
-          ],
-        ),
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              new WebviewScaffold(url: url),
-            ],
-          ),
-          // ignore: expected_token
-        ));
+    );
   }
 }
+
+
+
