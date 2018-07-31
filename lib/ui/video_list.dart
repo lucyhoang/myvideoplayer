@@ -1,9 +1,13 @@
+import 'dart:async';
+import 'dart:io';
+import "package:http/http.dart" as http;
 import 'package:flutter/material.dart';
 import 'package:my_video_player/model/globals.dart' as globals;
 import 'package:my_video_player/repository/local_playlist_dao.dart';
 import 'package:my_video_player/model/video.dart';
 import 'add_to_playlist.dart';
 import 'play_video.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ListVideo extends StatefulWidget {
   final List<Video> list;
@@ -79,9 +83,17 @@ class ListVideoState extends State<ListVideo> {
                           )
                         : Icon(Icons.play_arrow),
                     onPressed: () => Navigator.of(context).push(
-                        new MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                new VideoPlay(url: list[i].embedLink, title: list[i].title))),
+                      MaterialPageRoute(builder: (context) {
+                        return new FutureBuilder<File>(
+                            future: _downloadFile(list[i].downloadUrl, list[i].title),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) print(snapshot.error);
+                              return snapshot.hasData
+                                  ? new VideoApp(file: snapshot.data, title: list[i].title)
+                                  : Center(child: new CircularProgressIndicator());
+                            });
+                      }),
+                    ),
                   )),
               title: Text(list[i].title.split(".")[0]),
               trailing: PopupMenuButton<int>(
@@ -147,5 +159,19 @@ class ListVideoState extends State<ListVideo> {
       default:
         break;
     }
+  }
+
+  Future<File> _downloadFile(String url, String fileName) async {
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    File file = new File('$dir/$fileName');
+    bool fileExist = await file.exists();
+
+    if (!fileExist) {
+      var header = await globals.currentUser.authHeaders;
+      final response = await http.get(url, headers: header);
+      await file.writeAsBytes(response.bodyBytes);
+    }
+
+    return file;
   }
 }

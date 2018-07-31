@@ -6,7 +6,8 @@ class Video {
     this.title,
     this.thumbnailLink,
     this.viewLink,
-    this.embedLink
+    this.embedLink,
+    this.downloadUrl
     });
 
   final String id;
@@ -14,6 +15,7 @@ class Video {
   final String thumbnailLink;
   final String viewLink;
   final String embedLink;
+  final String downloadUrl;
 
   Map<String, dynamic> toJson() {
 
@@ -23,6 +25,7 @@ class Video {
     data["thumbnailLink"] = this.thumbnailLink;
     data["viewLink"] = this.viewLink;
     data["embedLink"] = this.embedLink;
+    data["downloadUrl"] = this.downloadUrl;
 
     return data;
 

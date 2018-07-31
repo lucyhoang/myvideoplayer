@@ -7,8 +7,6 @@ GoogleSignIn googleSignIn = new GoogleSignIn(
   ],
 );
 
-String token;
-
 GoogleSignInAccount _currentUser;
 
 GoogleSignInAccount get currentUser {
