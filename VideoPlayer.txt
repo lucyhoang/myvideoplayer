@@ -1,0 +1,33 @@
+1. Login 
+Input username/pass is gmail account/pass to login
+
+2. After login, go to main screen
+This one contains bottom menu
+- Home
+- MyPlayList
+Default, Home tab is active
+
+3. Home screen
+- List all video files on google driver
+- Tab to each video >> go to video player
+- Long press on each video >> there is an menu is shown from the bottom then user can choose "add to playlist" 
+
+4. MyPlayList
+- List all available playlist
+- There is one item for create new playlist
+- Tab on each playlist >> show screen PlayList that list all the video on this playlist. This screen is similar home screen, but data is come from playlist
+-  Long press on each playlist >> There is a menu is shown from the bottom that user can choose "Remove playlist"
+
+5. NewPlayList
+When tap to "create new playlist" on MyPlayList screen, show NewPlayList screen.
+On this screen, user input Name, Description then tap ok/cancel to create/cancel new playlist
+
+6. AddToPlayList
+When user select "AddToPlayList" on each video in list video of Home or certain playlist, AddToPlayList show
+On this screen, all available playlists are shown, user can choose it with checkbox option.
+One video can belong some difference playlist
+Click Ok/cancel to update or cancel data
+
+7. Video player
+On this screen, there is an menu option at the top left then user can choose "AddToPlayList" or "RemoveFromCurrentPlayList"
+Option "RemoveFromCurrentPlayList" only shown when video is navigated from certain playlist

@@ -36,7 +36,7 @@ class ListVideoState extends State<ListVideo> {
     super.initState();
     globals.eventBus.on<VideoEvent>().listen((event) {
       setState(() {
-        if (widget.inPlayList) {
+        if (widget.inPlayList && widget.playlistId == event.playlistId) {
           switch (event.eventType) {
             case globals.EventType.Remove:
               list.removeWhere((v) => v.id == event.video.id);
@@ -89,7 +89,7 @@ class ListVideoState extends State<ListVideo> {
                             builder: (context, snapshot) {
                               if (snapshot.hasError) print(snapshot.error);
                               return snapshot.hasData
-                                  ? new VideoApp(file: snapshot.data, title: list[i].title)
+                                  ? new Test(file: snapshot.data, title: list[i].title)
                                   : Center(child: new CircularProgressIndicator());
                             });
                       }),

@@ -15,8 +15,8 @@ class LogoutPage extends StatelessWidget {
         future: getData(),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
-          return snapshot.hasData
-              ? (snapshot.data != null
+          if (snapshot.hasData) {
+            return (snapshot.data != null
                   ? new Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
@@ -33,8 +33,10 @@ class LogoutPage extends StatelessWidget {
                         ),
                       ],
                     )
-                  : new Text("SIGN OUT SUCCESS"))
-              : new CircularProgressIndicator();
+                  : new Text("SIGN OUT SUCCESS"));
+          } else {
+            return new CircularProgressIndicator();
+          }
         });
   }
 

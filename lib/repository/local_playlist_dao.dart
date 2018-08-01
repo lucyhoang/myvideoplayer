@@ -22,7 +22,7 @@ class PlayListDAO {
     if (_db == null) {
       if (_dbPath == null) {
         var dataDir = await getApplicationDocumentsDirectory();
-        _dbPath = dataDir.path + "/myplaylist.db";
+        _dbPath = dataDir.path + "/videoplayer.db";
       }
       _db = await databaseFactoryIo.openDatabase(_dbPath);
     }
