@@ -63,38 +63,66 @@ class ListVideoState extends State<ListVideo> {
             margin: EdgeInsets.only(top: 15.0),
             child: ListTile(
               contentPadding:
-                  EdgeInsets.only(top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
-              leading: Container(
-                  width: 120.0,
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      //border: Border.all(width: 1.0, color: Colors.grey[300]),
-                      borderRadius: BorderRadius.circular(1.0)),
-                  child: MaterialButton(
-                    child: list[i].thumbnailLink != null
-                        ? new Container(
-                            height: 50.0,
-                            decoration: new BoxDecoration(
-                                image: new DecorationImage(
-                                    image:
-                                        new NetworkImage(list[i].thumbnailLink),
-                                    fit: BoxFit.cover)),
-                          )
-                        : Icon(Icons.play_arrow),
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) {
-                        return new FutureBuilder<File>(
-                            future: _downloadFile(list[i].downloadUrl, list[i].title),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasError) print(snapshot.error);
-                              return snapshot.hasData
-                                  ? new Test(file: snapshot.data, title: list[i].title)
-                                  : Center(child: new CircularProgressIndicator());
-                            });
-                      }),
-                    ),
-                  )),
+              EdgeInsets.only(top: 10.0, bottom: 10.0, left: 0.0, right: 0.0),
+//              leading: Container(
+//                  width: 120.0,
+//                  height: 50.0,
+//                  decoration: BoxDecoration(
+//                      color: Colors.transparent,
+//                      //border: Border.all(width: 1.0, color: Colors.grey[300]),
+//                      borderRadius: BorderRadius.circular(1.0)),
+//                  child: MaterialButton(
+//                    child: list[i].thumbnailLink != null
+//                        ? new Container(
+//                            height: 50.0,
+//                            decoration: new BoxDecoration(
+//                                image: new DecorationImage(
+//                                    image:
+//                                        new NetworkImage(list[i].thumbnailLink),
+//                                    fit: BoxFit.cover)),
+//                          )
+//                        : Icon(Icons.play_arrow),
+//                    onPressed: () => Navigator.of(context).push(
+//                      MaterialPageRoute(builder: (context) {
+//                        return new FutureBuilder<File>(
+//                            future: _downloadFile(list[i].downloadUrl, list[i].title),
+//                            builder: (context, snapshot) {
+//                              if (snapshot.hasError) print(snapshot.error);
+//                              return snapshot.hasData
+//                                  ? new Test(file: snapshot.data, title: list[i].title)
+//                                  : Center(child: new CircularProgressIndicator());
+//                            });
+//                      }),
+//                    ),
+//                  )),
+                leading: Container(
+                width: 130.0,
+                height: 90.0,
+                decoration: BoxDecoration(
+                  color: Colors.black38,
+                  border: Border.all(width: 1.0, color: Colors.grey[300]),
+                  borderRadius: BorderRadius.circular(3.0),
+                  image: new DecorationImage(
+                      image: new NetworkImage(
+                          list[i].thumbnailLink),
+                      fit: BoxFit.cover
+                  ),),
+                child: IconButton(
+                  icon: Icon(Icons.play_arrow, color: Colors.white, size: 35.0, ),
+                  onPressed: () => Navigator.of(context).push (
+                    MaterialPageRoute(builder: (context){
+                      return new FutureBuilder<File>(
+                        future: _downloadFile(list[i].downloadUrl, list[i].title),
+                        builder: (context, snapshot){
+                          if (snapshot.hasError) print(snapshot.error);
+                          return snapshot.hasData
+                              ? new Test(file: snapshot.data, title: list[i].title,)
+                              : Center(child: new CircularProgressIndicator());
+                        },
+                      );
+                    })
+                  ),
+                )),
               title: Text(list[i].title.split(".")[0]),
               trailing: PopupMenuButton<int>(
                 icon:

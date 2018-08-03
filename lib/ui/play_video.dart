@@ -104,10 +104,7 @@ class Test extends StatelessWidget{
       appBar: new AppBar(
         title: new Text(title),
       ),
-      body: new FilePlayerLifeCycle(
-         file, (BuildContext context, VideoPlayerController controller) =>
-        new AspectRatioVideo(controller),
-      ),
+      body: new AspectRatioVideo(controller),
     );
   }
 }
@@ -139,6 +136,9 @@ class _VideoPlayPauseState extends State<VideoPlayPause> {
   @override
   void initState() {
     super.initState();
+    controller.initialize().then((_){
+      setState((){});
+    });
     controller.addListener(listener);
     controller.setVolume(1.0);
     controller.play();
@@ -278,6 +278,10 @@ class AspectRatioVideoState extends State<AspectRatioVideo> {
       }
     };
     controller.addListener(listener);
+    controller.initialize().then((_) {
+    // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+    setState(() {});
+    });
   }
 
   @override
@@ -299,64 +303,4 @@ class AspectRatioVideoState extends State<AspectRatioVideo> {
 typedef Widget VideoWidgetBuilder(
     BuildContext context, VideoPlayerController controller);
 
-abstract class PlayerLifeCycle extends StatefulWidget {
-  final VideoWidgetBuilder childBuilder;
-  final String dataSource;
-  final File file;
-
-  PlayerLifeCycle(this.dataSource, this.file, this.childBuilder);
-}
-
-abstract class _PlayerLifeCycleState extends State<PlayerLifeCycle> {
-  VideoPlayerController controller;
-
-  @override
-  /// Subclasses should implement [createVideoPlayerController], which is used
-  /// by this method.
-  void initState() {
-    super.initState();
-    controller = createVideoPlayerController();
-    controller.addListener(() {
-      if (controller.value.hasError) {
-        print(controller.value.errorDescription);
-      }
-    });
-    controller.initialize();
-    controller.setLooping(true);
-    controller.play();
-  }
-
-  @override
-  void deactivate() {
-    super.deactivate();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return widget.childBuilder(context, controller);
-  }
-
-  VideoPlayerController createVideoPlayerController();
-}
-
-class FilePlayerLifeCycle extends PlayerLifeCycle {
-  FilePlayerLifeCycle(File file, VideoWidgetBuilder childBuilder)
-      : super(null, file, childBuilder);
-
-  @override
-  _FilePlayerLifeCycleState createState() => new _FilePlayerLifeCycleState();
-}
-
-class _FilePlayerLifeCycleState extends _PlayerLifeCycleState {
-  @override
-  VideoPlayerController createVideoPlayerController() {
-    return new VideoPlayerController.file(widget.file);
-  }
-}
 
